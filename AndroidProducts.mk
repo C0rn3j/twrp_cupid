@@ -6,9 +6,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_cupid.mk
+    $(LOCAL_DIR)/twrp_cupid.mk
 
 COMMON_LUNCH_CHOICES := \
-    omni_cupid-user \
-    omni_cupid-userdebug \
-    omni_cupid-eng
+    twrp_cupid-user \
+    twrp_cupid-userdebug \
+    twrp_cupid-eng

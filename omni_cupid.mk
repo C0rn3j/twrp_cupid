@@ -1,34 +1,25 @@
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+#
+# Copyright (C) 2022 The Android Open Source Project
+# Copyright (C) 2022 SebaUbuntu's TWRP device tree generator
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
-# Add this line if your device is 64-bit
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-# Otherwise, If you have 32-bit device, add the below line instead of above line
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_minimal.mk
+# Inherit from those products. Most specific first.
+$(call inherit-product-if-exists, $(SRC_TARGET_DIR)/product/embedded.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-# Another common config inclusion
-$(call inherit-product, $(SRC_TARGET_DIR)/product/embedded.mk)
+# Inherit from cupid device
+$(call inherit-product, device/xiaomi/cupid/device.mk)
 
-# If you are building from OmniROM's minimal source, Inherit some common Omni stuff.
+# Inherit some common Omni stuff.
 $(call inherit-product, vendor/omni/config/common.mk)
+$(call inherit-product, vendor/omni/config/gsm.mk)
 
-# Replace $$DEVICE$$ with your Device Name's Value.
-# Replace $$BRAND$$ with your Brand's / Manufacturer's Value.
-PRODUCT_COPY_FILES += device/$$BRAND$$/$$DEVICE$$/prebuilt/zImage:kernel
-# Fles under $(LOCAL_PATH)/recovery/root/ gets automatically copied into recovery
-# PRODUCT_COPY_FILES += $(LOCAL_PATH)/recovery/root/*:root/*
-
-PRODUCT_DEVICE := $$DEVICE$$
-PRODUCT_NAME := omni_$$DEVICE$$
-PRODUCT_BRAND := $$BRAND$$
-PRODUCT_MODEL := $$DEVICE$$
-PRODUCT_MANUFACTURER := $$BRAND$$
-
-# Forcefully add mtp support (adb is already there)
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
-
-# Add fingerprint from Stock ROM build.prop
-PRODUCT_BUILD_PROP_OVERRIDES += \
-    # These lines are from my device. You MUST Replace yours.
-    BUILD_FINGERPRINT="WALTON/Primo_RX5/Primo_RX5:6.0/MRA58K/1465782828:user/release-keys" \
-    PRIVATE_BUILD_DESC="full_gionee6735_65u_m0-user 6.0 MRA58K 1465782828 release-keys"
+# Device identifier. This must come after all inclusions
+PRODUCT_DEVICE := cupid
+PRODUCT_NAME := omni_cupid
+PRODUCT_BRAND := Xiaomi
+PRODUCT_MODEL := 2201123G
+PRODUCT_MANUFACTURER := xiaomi
